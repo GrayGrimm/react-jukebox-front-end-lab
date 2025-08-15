@@ -1,10 +1,13 @@
+import { useState, useEffect } from 'react';
 import * as trackService from './services/trackService.js'
 import TrackList from './components/TrackList/TrackList.jsx'
-import { useState, useEffect } from 'react';
+import TrackForm from './components/TrackForm/TrackForm.jsx'
 
 
 const App = () => {
   const [tracks, setTracks] = useState([]);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
 
   useEffect(() => {
     const fetchTracks = async () => {
@@ -23,8 +26,13 @@ const App = () => {
     fetchTracks();
   }, []);
 
+  // const handleFormView = () => {
+
+  // }
+
   return (
     <>
+      <TrackForm  />
       <TrackList tracks={tracks} />
     </>
   );
