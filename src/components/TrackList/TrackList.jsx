@@ -13,7 +13,7 @@ const TrackList = ({ tracks }) => {
                             <li
                                 key={track._id}
                             >
-                                {track.title}
+                                {track.title} by {track.artist}
                             </li>
                         ))}
                     </ul>
