@@ -26,14 +26,23 @@ const App = () => {
     fetchTracks();
   }, []);
 
-  // const handleFormView = () => {
-
-  // }
-
+  const handleFormView = () => {
+    setIsFormOpen(!isFormOpen);
+  };
+  //when adding the play functionality make sure when a song is played the form disappears
   return (
     <>
-      <TrackForm  />
-      <TrackList tracks={tracks} />
+      {isFormOpen ? (
+        <TrackForm />
+      ) : (
+        <TrackList
+          tracks={tracks}
+          handleFormView={handleFormView}
+          isFormOpen={isFormOpen}
+        />
+      )}
+
+
     </>
   );
 };
