@@ -22,7 +22,12 @@ const App = () => {
     };
     fetchTracks();
   }, []);
-  return <h1>Hello world!</h1>;
+
+  return (
+    <>
+      <TrackList tracks={tracks} />
+    </>
+  );
 };
 
 export default App;
