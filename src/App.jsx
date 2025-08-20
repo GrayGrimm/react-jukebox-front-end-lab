@@ -40,7 +40,7 @@ const App = () => {
           handleFormView={handleFormView}
           isFormOpen={isFormOpen}
         />
-      )}
+      )};
 
 
     </>
