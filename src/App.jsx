@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import * as trackService from './services/trackService.js'
-import TrackList from './components/TrackList/TrackList.jsx'
-import TrackForm from './components/TrackForm/TrackForm.jsx'
+import * as trackService from './services/trackService.js';
+import TrackList from './components/TrackList/TrackList.jsx';
+import TrackForm from './components/TrackForm/TrackForm.jsx';
 
 
 const App = () => {
@@ -30,19 +30,34 @@ const App = () => {
     setIsFormOpen(!isFormOpen);
   };
   //when adding the play functionality make sure when a song is played the form disappears
+
+  const handleAddTrack = async (formData) => {
+    try {
+
+      const newTrack = await trackService.create(formData)
+
+      if (newTrack.err) {
+        throw new Error(newTrack.err);
+      };
+      
+      setTracks([newTrack, ...tracks]);
+      setIsFormOpen(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       {isFormOpen ? (
-        <TrackForm />
+        <TrackForm handleAddTrack={handleAddTrack} />
       ) : (
         <TrackList
           tracks={tracks}
           handleFormView={handleFormView}
           isFormOpen={isFormOpen}
         />
-      )};
-
-
+      )}
     </>
   );
 };
