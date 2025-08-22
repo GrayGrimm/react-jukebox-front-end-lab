@@ -1,6 +1,6 @@
 // src/components/HootDetails/HootDetails.jsx
 
-const TrackList = ({ tracks, isFormOpen, handleFormView, TrackForm, handleSelect, selected }) => {
+const TrackList = ({ tracks, isFormOpen, handleFormView, TrackForm, handleSelect, selected, handleDeleteTrack }) => {
 
     return (
         <>
@@ -23,10 +23,17 @@ const TrackList = ({ tracks, isFormOpen, handleFormView, TrackForm, handleSelect
                                     onClick={() => handleSelect(track)}
                                 >
                                     {track.title} by {track.artist}
-                                    <button onClick={() => handleFormView(selected)}>
-                                        Edit
-                                    </button>
-
+                                    <div>
+                                        <button>
+                                            Play 
+                                        </button>
+                                        <button onClick={() => handleFormView(selected)}>
+                                            Edit
+                                        </button>
+                                        <button onClick={() => handleDeleteTrack(track._id)}>
+                                            Delete
+                                        </button>
+                                    </div>
                                 </li>
                             ))}
                         </ul>

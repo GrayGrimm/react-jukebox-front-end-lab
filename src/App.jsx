@@ -55,23 +55,34 @@ const App = () => {
   };
 
   const handleUpdateTrack = async (formData, trackId) => {
-    try{
+    try {
       const updatedTrack = await trackService.update(formData, trackId);
 
       if (updatedTrack.err) {
         throw new Error(updatedTrack.err)
-    }
-    const updatedTrackList = tracks.map((track) => (
-      track._id !== updatedTrack._id ? track : updatedTrack
-    ));
-    setTracks(updatedTrackList);
-    setSelected(updatedTrack);
-    setIsFormOpen(false);
-    }catch(err){
+      }
+      const updatedTrackList = tracks.map((track) => (
+        track._id !== updatedTrack._id ? track : updatedTrack
+      ));
+      setTracks(updatedTrackList);
+      setSelected(updatedTrack);
+      setIsFormOpen(false);
+    } catch (err) {
       console.log(err);
     }
   };
 
+  const handleDeleteTrack = async (trackId) => {
+    try{
+      const deletedTrack = await trackService.deleteTrack(trackId)
+
+      setTracks(tracks.filter((track)=> track._id !== deletedTrack._id));
+      setSelected(null);
+      setIsFormOpen(false);
+    }catch(err){
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -89,8 +100,12 @@ const App = () => {
             isFormOpen={isFormOpen}
             handleSelect={handleSelect}
             selected={selected}
+            handleDeleteTrack={handleDeleteTrack}
           />
-          <TrackDetail selected={selected} />
+          <TrackDetail
+            selected={selected}
+            handleDeleteTrack={handleDeleteTrack}
+          />
           {/* {selected && (
             <div>
               <h2>Selected Track:</h2>
