@@ -1,11 +1,17 @@
 import { useState } from 'react';
+import { useParams } from 'react-router';
 
-const TrackForm = ({ handleAddTrack }) => {
+
+const TrackForm = ({ handleAddTrack, selected, handleUpdateTrack }) => {
+
+
     const initState = {
         title: '',
         artist: '',
     };
-    const [formData, setFormData] = useState(initState);
+    const [formData, setFormData] = useState(
+        selected ? selected : initState
+    );
 
     const handleChange = ({ target }) => {
         setFormData({ ...formData, [target.name]: target.value });
@@ -13,11 +19,15 @@ const TrackForm = ({ handleAddTrack }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        handleAddTrack(formData);
+        if (selected) {
+            handleUpdateTrack(formData, selected._id)
+        } else {
+            handleAddTrack(formData);
+        }
     }
     return (
         <div>
+            <h1>{selected ? 'Edit Track' : 'New Track'}</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="title"> Title </label>
                 <input
@@ -35,7 +45,10 @@ const TrackForm = ({ handleAddTrack }) => {
                     onChange={handleChange}
                     required
                 />
-                <button type="submit">Add New Track</button>
+                {!selected ?
+                    <button type="submit">Add New Track</button> :
+                    <button type="submit">Edit Track</button>
+                }
             </form>
         </div>
     );
